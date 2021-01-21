@@ -8,7 +8,7 @@ def wrap_schema_for_sqs(contract_schema: Schema) -> Schema:
         {
             "Messages": [
                 Schema(
-                    {"body": And(Use(json.loads), contract_schema)},
+                    {"Body": And(Use(json.loads), contract_schema)},
                     ignore_extra_keys=True,
                 ),
             ],
