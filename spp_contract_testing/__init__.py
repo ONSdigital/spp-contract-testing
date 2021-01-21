@@ -1,3 +1,3 @@
-from .contract import validate_contract
+from .contract import meets_contract
 
-__all__ = ["validate_contract"]
+__all__ = ["meets_contract"]

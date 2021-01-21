@@ -1,7 +1,7 @@
 import pytest
 import schema
 
-from spp_contract_testing import schemas, validate_contract
+from spp_contract_testing import meets_contract, schemas
 
 
 @pytest.mark.parametrize(
@@ -36,7 +36,7 @@ from spp_contract_testing import schemas, validate_contract
     ],
 )
 def test_validate_contract(schema, data):
-    assert validate_contract(schema, data)
+    assert meets_contract(schema, data)
 
 
 @pytest.mark.parametrize(
@@ -67,5 +67,5 @@ def test_validate_contract(schema, data):
 )
 def test_validate_contract_fail(error_type, error_string, schema, data):
     with pytest.raises(error_type) as error:
-        validate_contract(schema, data)
+        meets_contract(schema, data)
     assert str(error.value) == error_string
