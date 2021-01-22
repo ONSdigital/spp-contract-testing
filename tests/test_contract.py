@@ -1,7 +1,7 @@
 import pytest
 import schema
 
-from spp_contract_testing import meets_contract, schemas
+from spp_contract_testing import meets_contract
 
 
 @pytest.mark.parametrize(
@@ -12,26 +12,6 @@ from spp_contract_testing import meets_contract, schemas
         (
             pytest.lazy_fixture("contract_schema"),
             {"foo": "a longer sentence should still be fine", "bar": 999999},
-        ),
-        (
-            schemas.LOG_CONTEXT,
-            {"log_correlation_id": "asdasdr", "log_level": "INFO"},
-        ),
-        (
-            schemas.LOG_CONTEXT,
-            {
-                "log_correlation_id": "asdasdr",
-                "log_level": "INFO",
-                "extra": 20,
-            },
-        ),
-        (
-            schemas.LOG_CONTEXT_JSON,
-            '{"log_correlation_id": "asdasdr", "log_level": "INFO"}',
-        ),
-        (
-            schemas.LOG_CONTEXT_JSON,
-            '{"log_correlation_id": "asdasdr","log_level": "INFO","extra": 20}',
         ),
     ],
 )
@@ -53,15 +33,6 @@ def test_meets_contract(schema, data):
             "Key 'foo' error:\n20 should be instance of 'str'",
             pytest.lazy_fixture("contract_schema"),
             {"foo": 20, "bar": "20"},
-        ),
-        (
-            schema.SchemaError,
-            (
-                "Key 'log_level' error:\n"
-                + "validate_log_level('MADE UP') should evaluate to True"
-            ),
-            schemas.LOG_CONTEXT,
-            {"log_correlation_id": "asdasdr", "log_level": "MADE UP"},
         ),
     ],
 )
