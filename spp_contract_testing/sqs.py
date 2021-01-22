@@ -31,3 +31,19 @@ def wrap_schema_for_sqs_event(contract_schema: Schema) -> Schema:
         },
         ignore_extra_keys=True,
     )
+
+
+# This is what you would see as the input event for a lambda triggered by sqs
+# via eventbridge
+def wrap_schema_for_sqs_eventbridge_event(contract_schema: Schema) -> Schema:
+    return Schema(
+        {
+            "Records": [
+                Schema(
+                    {"body": And(Use(json.loads), {"detail": contract_schema})},
+                    ignore_extra_keys=True,
+                ),
+            ],
+        },
+        ignore_extra_keys=True,
+    )
